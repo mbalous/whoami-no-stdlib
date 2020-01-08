@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="whoami.c">
+    <ClCompile Include="src\whoami.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
