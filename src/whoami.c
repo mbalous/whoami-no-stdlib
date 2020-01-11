@@ -3,6 +3,8 @@
 
 HANDLE heap;
 
+extern void error_message_box();
+
 enum OutputTarget {
 	DebuggerOutput = 0,
 	MessageBoxOutput = 1
@@ -27,7 +29,7 @@ void display_last_error(enum OutputTarget outputTarget)
 		OutputDebugStringW(messageBuffer);
 	}
 	else if (outputTarget == MessageBoxOutput) {
-		MessageBoxW(NULL, messageBuffer, L"An error occured", MB_ICONERROR | MB_OK);
+		error_message_box(messageBuffer);
 	}
 
 	LocalFree(messageBuffer);
@@ -68,7 +70,6 @@ wchar_t* getComputerName() {
 int WINAPI WinMainCRTStartup(void) {
 	heap = GetProcessHeap(); // for memory allocations
 	wchar_t* commandLineStr = GetCommandLineW();
-
 	int argc;
 	LPWSTR* args = CommandLineToArgvW(commandLineStr, &argc); // args is array of string with arguments
 
