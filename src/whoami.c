@@ -87,8 +87,10 @@ int WINAPI WinMainCRTStartup(void) {
 	// since we're running in windows subsystem
 	BOOL consoleAttached;
 	if (AttachConsole(ATTACH_PARENT_PROCESS) == 0) { // attachment to exising console failed
-		// allocate new console
-		if (AllocConsole() == 0) { // allocating console failed
+
+		DWORD lastError = GetLastError();
+		// allocate new console, if invalid handle is present, that means current process has no console allocated
+		if (lastError == ERROR_INVALID_HANDLE && AllocConsole() == 0) { // allocating console failed
 			display_last_error(MessageBoxOutput);
 			return 1;
 		}
